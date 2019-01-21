@@ -1,0 +1,50 @@
+.index-container {
+    display: flex;
+    flex-direction: column;
+
+    .item {
+        margin-top: 30px;
+        background-color: #f39800;
+        border-radius: 5px;
+        min-height: 120px;
+        margin-left: 10px;
+        margin-right: 10px;
+        color: #fff;
+        padding-left: 30px;
+        display: flex;
+        align-items: center;
+
+        .title {
+            font-size: 40px;
+            font-style: bold;
+        }
+
+        .price {
+            font-size: 14px;
+        }
+
+    }
+
+    .customer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 20px;
+        min-height: 80px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        background-color: #f39800;
+        color: #fff;
+
+        .avatar {
+            width: 40%;
+        }
+
+        .detail {
+            font-size: 14px;
+            display: block;
+        }
+
+    }
+}
