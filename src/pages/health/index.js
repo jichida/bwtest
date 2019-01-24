@@ -11,6 +11,22 @@ import './index.less'
 
 import initTimes from './times'
 
+const orderProps = [{
+  date:'2019-01-24',
+  time: '14:00-14:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2019-01-24',
+  time: '16:00-16:30',
+  category:'健身',
+  price:60
+}
+]
+
+const category = '健身';
+
 class Index extends Taro.Component {
 
   config = {
@@ -22,12 +38,30 @@ class Index extends Taro.Component {
   constructor(props) {
     super(props)
 
+    lodashmap(orderProps, (item) => {
+      console.log(item.category)
+      if(item.category === category){
+        console.log(item.date)
+        console.log(this.state.order[item.date])
+        if(!this.state.order[item.date]){
+          this.state.order[item.date] = {...initTimes};
+        }
+        this.state.order[item.date][item.time] = true;
+        this.state.count = this.state.count + 1;
+        console.log(this.state.order[item.date][item.time])
+      }
+    })
+
+    this.state.dur = {
+      hours: parseInt(this.state.count/2),
+      mins: this.state.count%2*30
+    }
   }
 
   state = {
-    dateSel: moment().format('L'),
+    dateSel: moment().format('YYYY-MM-DD'),
     order:{
-      [`${moment().format('L')}`] : {...initTimes}
+      [`${moment().format('YYYY-MM-DD')}`] : {...initTimes}
     },
     count: 0,
     dur: {
@@ -65,20 +99,20 @@ class Index extends Taro.Component {
 
   onDateChange = e => {
     const nextDate = moment(e.detail.value);
-    console.log(nextDate.format('L'))
-    console.log(nextDate.isBefore(moment().format('L')))
-    if(!nextDate.isBefore(moment().format('L'))){
-      if(!this.state.order[nextDate.format('L')]){
+    console.log(nextDate.format('YYYY-MM-DD'))
+    console.log(nextDate.isBefore(moment().format('YYYY-MM-DD')))
+    if(!nextDate.isBefore(moment().format('YYYY-MM-DD'))){
+      if(!this.state.order[nextDate.format('YYYY-MM-DD')]){
         const order = this.state.order
-        order[nextDate.format('L')] = {...initTimes}
+        order[nextDate.format('YYYY-MM-DD')] = {...initTimes}
         this.setState({
-          dateSel: nextDate.format('L'),
+          dateSel: nextDate.format('YYYY-MM-DD'),
           order
         })
       }
       else{
         this.setState({
-          dateSel: nextDate.format('L')
+          dateSel: nextDate.format('YYYY-MM-DD')
         })
       }
     }
@@ -102,20 +136,20 @@ class Index extends Taro.Component {
   handleLeftChange = () => {
     const curDate = moment(this.state.dateSel)
     const nextDate = curDate.subtract(1, 'days');
-    console.log(nextDate.format('L'))
-    console.log(nextDate.isBefore(moment().format('L')))
-    if(!nextDate.isBefore(moment().format('L'))){
-      if(!this.state.order[nextDate.format('L')]){
-        const order = this.state.order
-        order[nextDate.format('L')] = {...initTimes}
+    console.log(nextDate.format('YYYY-MM-DD'))
+    console.log(nextDate.isBefore(moment().format('YYYY-MM-DD')))
+    if(!nextDate.isBefore(moment().format('YYYY-MM-DD'))){
+      if(!this.state.order[nextDate.format('YYYY-MM-DD')]){
+        const order = {...this.state.order}
+        order[nextDate.format('YYYY-MM-DD')] = {...initTimes}
         this.setState({
-          dateSel: nextDate.format('L'),
+          dateSel: nextDate.format('YYYY-MM-DD'),
           order
         })
       }
       else{
         this.setState({
-          dateSel: nextDate.format('L')
+          dateSel: nextDate.format('YYYY-MM-DD')
         })
       }
     }
@@ -124,24 +158,42 @@ class Index extends Taro.Component {
   handleRightChange = () => {
     const curDate = moment(this.state.dateSel)
     const nextDate = curDate.add(1, 'days');
-    if(!this.state.order[nextDate.format('L')]){
-      const order = this.state.order
-      console.log(initTimes)
-      order[nextDate.format('L')] = {...initTimes}
+    console.log('Right Change:')
+    console.log(nextDate.format('YYYY-MM-DD'))
+    console.log(this.state.order[nextDate.format('YYYY-MM-DD')])
+    if(!this.state.order[nextDate.format('YYYY-MM-DD')]){
+      const order = {...this.state.order}
+      order[nextDate.format('YYYY-MM-DD')] = {...initTimes}
       this.setState({
-        dateSel: nextDate.format('L'),
+        dateSel: nextDate.format('YYYY-MM-DD'),
         order
       })
     }
     else {
       this.setState({
-        dateSel: nextDate.format('L'),
+        dateSel: nextDate.format('YYYY-MM-DD'),
       })
     }
   }
 
   handleSubmit = () => {
+    const values = []
+    lodashmap(this.state.order, (times, day)=>{
+      lodashmap(times, (v, k)=>{
+        if(v){
+          values.push({
+            date: day,
+            time: k,
+            category,
+            price: 20
+          })
+        }
+      })
+    })
+    console.log(values)
     // 提交预约
+    
+
   }
 
   render() {

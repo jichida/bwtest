@@ -55,21 +55,23 @@ class Index extends Taro.Component {
 
   handleGoHealth = () => {
     console.log('go to health!')
-    Taro.redirectTo({
+    Taro.navigateTo({
         url: '/pages/health/index'
       })
   }
 
   handleGoCurrent = () => {
     console.log('go to current user')
-    Taro.redirectTo({
+    Taro.navigateTo({
       url: '/pages/current/index'
     })
   }
 
   render() {
     const { userInfo } = this.props;
+
     return (
+      <View>
       <View className='index-container'>
         <View className='item'>
             <View>
@@ -89,7 +91,8 @@ class Index extends Taro.Component {
                 <View className='price'>收费标准：20元/半小时</View>
             </View>
         </View>
-        <View className='customer' onClick={this.handleGoCurrent}>
+      </View>
+      <View className='customer' onClick={this.handleGoCurrent}>
             <View className='avatar'><AtAvatar circle image='https://jdc.jd.com/img/200' /></View>
             <View className='info'>
                 <Text className="detail">你好， {userInfo.name}！</Text>

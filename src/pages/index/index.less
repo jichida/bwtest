@@ -1,12 +1,15 @@
 .index-container {
     display: flex;
     flex-direction: column;
+    min-height: calc(~'100vh - 140px');
+    align-items: center;
+    justify-content: space-evenly;//space-around;
 
     .item {
-        margin-top: 30px;
         background-color: #f39800;
         border-radius: 5px;
         min-height: 120px;
+        width: 80%;
         margin-left: 10px;
         margin-right: 10px;
         color: #fff;
@@ -22,10 +25,10 @@
         .price {
             font-size: 14px;
         }
-
     }
+}    
 
-    .customer {
+.customer {
         position: fixed;
         bottom: 0;
         width: 100%;
@@ -47,4 +50,3 @@
         }
 
     }
-}

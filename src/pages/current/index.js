@@ -5,34 +5,62 @@ import { connect } from '@tarojs/redux'
 
 import './index.less'
 
-const order = [
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  18:00-19:30  健身  预约: 60元',
+const order = [{
+  date:'2018/08/29',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/30',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+}
 ]
 
-const spended = [
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
-    '2018/08/29  14:00-15:30  健身  预约: 60元',
+const spended = [{
+  date:'2018/08/1',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/2',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/3',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/4',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/5',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/6',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
+{
+  date:'2018/08/7',
+  time: '14:00-15:30',
+  category:'健身',
+  price:60
+},
 ]
 
 class Index extends Taro.Component {
@@ -75,22 +103,28 @@ class Index extends Taro.Component {
     // counterAction.list(params)
   }
 
-  onDateChange = e => {
-    this.setState({
-      dateSel: e.detail.value
-    })
-  }
 
   render() {
     const orderList = order.map((item)=>{
         return (
-            <AtListItem key={item} className='list-item' title={item} />
+          <View className='list-item' key={`${item.category}${item.date}${item.time}`}>
+                <Text>{item.date}</Text>
+                <Text style={{flex: 1}}>{item.time}</Text>
+                <Text>{item.category}</Text>
+                <Text style={{paddingRight: '5px'}}>{`预约: ${item.price}元`}</Text>
+          </View>
         )
     })
 
     const spendedList = spended.map((item)=>{
         return (
-            <AtListItem key={item} className='list-item' title={item} />
+            //<AtListItem key={item} className='list-item' title={item} />
+            <View className='list-item' key={`${item.category}${item.date}${item.time}`}>
+                <Text>{item.date}</Text>
+                <Text style={{flex: 1}}>{item.time}</Text>
+                <Text>{item.category}</Text>
+                <Text style={{paddingRight: '5px'}}>{`预约: ${item.price}元`}</Text>
+          </View>
         )
     })
 
@@ -105,15 +139,22 @@ class Index extends Taro.Component {
         <View className='datesel'>
             <View className='item-title'><Text>已预约</Text></View>
         </View>
-        <AtList className='list'>
+        {/* <AtList className='list'>
             {orderList}
-        </AtList>
+        </AtList> */}
+        <View className='list'>
+          {orderList}
+        </View>
         <View className='datesel'>
             <View className='item-title'><Text>已消费</Text></View>
         </View>
-        <AtList>
+        {/* <AtList>
             {spendedList}
-        </AtList>
+        </AtList> */}
+        <View className='list'>
+          {spendedList}
+        </View>
+
       </View>
     )
   }
