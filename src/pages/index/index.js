@@ -2,7 +2,7 @@ import Taro from '@tarojs/taro'
 import { View, Button, Text } from '@tarojs/components'
 import { AtAvatar} from 'taro-ui'
 import { connect } from '@tarojs/redux'
-import getUserInfo from '../../actions/userinfo'
+import userInfo, { userLogin }from '../../actions/userinfo'
 
 
 import './index.less'
@@ -24,7 +24,25 @@ class Index extends Taro.Component {
   }
   componentWillMount() {
      // this.props.getList(this.state)
-     getUserInfo.asyncGetInfo()
+    //  Taro.login({
+    //   success(res) {
+    //     if (res.code) {
+          // 发起网络请求
+          // wx.request({
+          //   url: 'https://test.com/onLogin',
+          //   data: {
+          //     code: res.code
+          //   }
+          // })
+    //     } else {
+    //       console.log('登录失败！' + res.errMsg)
+    //     }
+    //   }
+    // })
+
+    this.login()
+
+    userInfo.getInfo()
   }
   componentWillUnmount() {
   }
@@ -51,6 +69,13 @@ class Index extends Taro.Component {
     //   page: this.state.page + 1, per_page: per_page
     // }
     // counterAction.list(params)
+  }
+
+  async login() {
+    //获取登陆code
+    const res = await Taro.login();
+    console.log(res);
+    userLogin(res.code);
   }
 
   handleGoHealth = () => {

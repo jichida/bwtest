@@ -16,6 +16,10 @@ export default function userInfo (state = INITIAL_STATE, action) {
         ...state,
         ...action.payload.data.data.user // 根据返回的数据选择路径
       }
+    // case LOGIN: 
+    //   return {
+    //     ...action.payload.data.data
+    //   }
      default:
        return state
   }
